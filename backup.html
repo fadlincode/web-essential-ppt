@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentasi: Membangun Web Modern</title>
+    <!-- Memuat Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Memuat font Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Icon untuk navigasi -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* Menggunakan font Inter sebagai default */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Struktur dasar slide */
+        .slide {
+            /* Sembunyikan semua slide secara default */
+            display: none;
+            /* Transisi untuk opacity dan transform */
+            transition: all 0.5s ease-in-out;
+            opacity: 0;
+            transform: translateX(100%);
+        }
+
+        /* Slide yang sedang aktif */
+        .slide.active {
+            display: flex;
+            /* Tampilkan sebagai flexbox */
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Slide yang baru saja dilewati */
+        .slide.previous {
+            display: flex;
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+
+        /* Helper untuk styling list */
+        .slide-content ul {
+            list-style-type: none;
+            /* Hilangkan bullet default */
+            padding-left: 0;
+        }
+
+        .slide-content ul li {
+            position: relative;
+            padding-left: 2.5rem;
+            /* Ruang untuk ikon */
+            margin-bottom: 1.25rem;
+            /* 20px */
+            font-size: 1.125rem;
+            /* 18px */
+            line-height: 1.6;
+        }
+
+        /* Membuat custom bullet point */
+        .slide-content ul li::before {
+            content: '✓';
+            /* Ikon centang */
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-weight: 900;
+            color: #34D399;
+            /* emerald-400 */
+            font-size: 1.25rem;
+            /* 20px */
+        }
+
+        /* Styling untuk list "Don't" */
+        .slide-content ul.donts li::before {
+            content: '✗';
+            /* Ikon silang */
+            color: #F87171;
+            /* red-400 */
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-white relative h-screen w-screen overflow-hidden">
+
+    <!-- Kontainer utama slideshow -->
+    <div id="slideshow-container" class="relative w-full h-full">
+
+        <!-- Slide 1: Judul -->
+        <div
+            class="slide active absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center items-center text-center bg-gradient-to-br from-blue-700 via-indigo-800 to-gray-900">
+            <div class="max-w-7xl">
+                <h1 class="text-4xl md:text-7xl font-black text-blue-200 uppercase tracking-wider mb-6">Web Programming Essentials</h1>
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-10">Build Your First Modern App
+                </h2>
+                <p class="text-2xl md:text-3xl font-light text-blue-100 mb-12">Dari Teori Kuliah ke Praktik Industri</p>
+
+                <div class="border-t-2 border-blue-300 opacity-50 w-1/3 mx-auto mb-10"></div>
+
+                <p class="text-xl md:text-2xl font-medium text-white mb-2">Fadlin Arsin</p>
+                <p class="text-lg md:text-xl font-light text-blue-200 mb-6">CTO at
+                    Techno's Studio</p>
+
+                <p class="text-lg md:text-xl font-medium text-blue-100">SAWALA ACADEMY</p>
+                <p id="presentation-date" class="text-md md:text-lg font-light text-blue-200">23 Oktober 2025</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Agenda -->
+        <div class="slide absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center">
+            <div class="slide-content max-w-4xl mx-auto w-full">
+                <h2 class="text-5xl font-bold mb-4 text-blue-300">Agenda Kita Hari Ini</h2>
+                <br>
+
+                <ol class="list-decimal list-outside text-2xl md:text-3xl space-y-6 text-gray-100 ml-8">
+                    <li class="mb-4"><strong class="font-semibold">Pengenalan:</strong> Aplikasi Web Modern</li>
+                    <li class="mb-4"><strong class="font-semibold">Jenis Web Apps:</strong> <span class="font-semibold text-yellow-400">Statik</span> x <span class="font-semibold text-green-400">Dinamis</span></li>
+                    <li class="mb-4"><strong class="font-semibold">Arsitektur Web</strong></li>
+                    <li class="mb-4"><strong class="font-semibold">Alur Kerja Web</strong></li>
+                    <li class="mb-4"><strong class="font-semibold">Elemen Penyusun Web</strong></li>
+                    <li class="mb-4"><strong class="font-semibold">Roadmap Web Developer</strong></li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 3: The Big Picture -->
+        <div class="slide absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center">
+            <div class="slide-content max-w-5xl mx-auto w-full">
+                <h2 class="text-5xl font-bold mb-10 text-blue-300">The Big Picture: Arsitektur Web Modern</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-lg">
+                    <!-- Frontend -->
+                    <div class="bg-gray-800 p-6 rounded-lg border border-blue-700 shadow-xl">
+                        <h3 class="text-2xl font-bold text-green-400 mb-4">1. Frontend (Client-Side)</h3>
+                        <p class="mb-3 text-gray-200">Ini yang dilihat user di browser.</p>
+                        <p class="text-gray-400 mb-2"><strong class="text-gray-100">Teknologi:</strong> HTML, CSS,
+                            <strong class="text-green-300">JavaScript</strong> (React, Vue, dll.)
+                        </p>
+                        <p class="text-gray-400"><strong class="text-gray-100">Tugas:</strong> Nampilin data, nangkep
+                            input user, bikin interaksi.</p>
+                    </div>
+
+                    <!-- Backend -->
+                    <div class="bg-gray-800 p-6 rounded-lg border border-blue-700 shadow-xl">
+                        <h3 class="text-2xl font-bold text-yellow-400 mb-4">2. Backend (Server-Side)</h3>
+                        <p class="mb-3 text-gray-200">"Otak" di balik aplikasi.</p>
+                        <p class="text-gray-400 mb-2"><strong class="text-gray-100">Teknologi:</strong> <strong
+                                class="text-yellow-300">PHP (Laravel)</strong>, Python (Django), Node.js, dll.</p>
+                        <p class="text-gray-400"><strong class="text-gray-100">Tugas:</strong> Logika bisnis,
+                            otentikasi, nyambung ke database.</p>
+                    </div>
+
+                    <!-- Database -->
+                    <div class="bg-gray-800 p-6 rounded-lg border border-blue-700 shadow-xl">
+                        <h3 class="text-2xl font-bold text-purple-400 mb-4">3. Database</h3>
+                        <p class="mb-3 text-gray-200">Tempat kita nyimpen data.</p>
+                        <p class="text-gray-400 mb-2"><strong class="text-gray-100">Teknologi:</strong> MySQL,
+                            PostgreSQL, MongoDB.</p>
+                        <p class="text-gray-400"><strong class="text-gray-100">Tugas:</strong> Nyimpen dan ngambil data.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-12 text-center">
+                    <p class="text-2xl font-medium text-gray-200">Gimana cara mereka "ngobrol"?</p>
+                    <p class="text-4xl font-bold text-cyan-300 mt-2">Melalui API (JSON)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Bagian 1: PHP -->
+        <div
+            class="slide absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center items-center text-center">
+            <div class="slide-content max-w-3xl">
+                <h2 class="text-3xl font-medium mb-4 text-blue-300">Bagian 1: PHP</h2>
+                <h1 class="text-6xl font-black mb-8">The Foundation</h1>
+                <p class="text-2xl text-gray-300 leading-relaxed">PHP itu bahasa yang "pemaaf" (forgiving), tapi ini
+                    bisa jadi jebakan.</p>
+                <p class="text-2xl text-gray-100 font-semibold mt-4">Jadi developer PHP yang jago itu kuncinya disiplin.
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 5: PHP Do's -->
+        <div class="slide absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center">
+            <div class="slide-content max-w-4xl mx-auto w-full">
+                <h2 class="text-5xl font-bold mb-10"><span class="text-green-400">PHP: The DO's</span> (Yang Harus
+                    Dilakukan)</h2>
+                <ul>
+                    <li>
+                        Pakai versi PHP terbaru (saat ini 8.x).
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? Jauh lebih kenceng & aman.</p>
+                    </li>
+                    <li>
+                        Wajib pakai <strong class="font-semibold">Composer</strong> untuk <em class="italic">dependency
+                            management</em>.
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? Biar nggak `require 'library.php'` manual.
+                            Composer yang ngurusin semua <em class="italic">library</em>.</p>
+                    </li>
+                    <li>
+                        Selalu pakai <strong class="font-semibold">PDO (PHP Data Objects)</strong> untuk koneksi
+                        database.
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? Ini standar biar aman dari <em
+                                class="italic">SQL Injection</em>.</p>
+                    </li>
+                    <li>
+                        Ikuti standar koding <strong class="font-semibold">PSR-12</strong>.
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? Biar kode kalian seragam dan gampang dibaca
+                            tim.</p>
+                    </li>
+                    <li>
+                        Selalu <em class="italic">validate</em> dan <em class="italic">sanitize</em> input dari user.
+                        <p class="text-lg text-gray-400 italic ml-2 font-semibold">Kenapa? Prinsipnya: <strong
+                                class="font-bold text-red-300">"Never trust user input."</strong></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 6: PHP Don'ts -->
+        <div class="slide absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center">
+            <div class="slide-content max-w-4xl mx-auto w-full">
+                <h2 class="text-5xl font-bold mb-10"><span class="text-red-400">PHP: The DON'Ts</span> (Yang Harus
+                    Dihindari)</h2>
+                <ul class="donts">
+                    <li>
+                        Jangan pakai fungsi `mysql_*` atau `mysqli_*` secara langsung.
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? Ini udah jadul (deprecated) dan nggak aman.
+                        </p>
+                    </li>
+                    <li>
+                        Nyampur logika PHP & HTML dalam satu file (Spaghetti Code).
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? Bikin pusing pas <em
+                                class="italic">maintenance</em>. Ini alasan kita pakai <em
+                                class="italic">framework</em>.</p>
+                    </li>
+                    <li>
+                        Matiin error reporting (`error_reporting(0)`).
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? Gimana mau benerin bug kalau bug-nya nggak
+                            kelihatan?</p>
+                    </li>
+                    <li>
+                        Jangan "reinvent the wheel" (Membuat ulang roda).
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? Nggak usah bikin fungsi login/routing
+                            sendiri. Ambil aja dari Composer.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 7: Bagian 2: JavaScript -->
+        <div
+            class="slide absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center items-center text-center">
+            <div class="slide-content max-w-3xl">
+                <h2 class="text-3xl font-medium mb-4 text-blue-300">Bagian 2: JavaScript</h2>
+                <h1 class="text-6xl font-black mb-8">The Interaction</h1>
+                <p class="text-2xl text-gray-300 leading-relaxed">JavaScript sekarang bukan cuma buat "efek salju" di
+                    website.</p>
+                <p class="text-2xl text-gray-100 font-semibold mt-4">Ini udah jadi bahasa pemrograman serius yang
+                    powerful banget.</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: JavaScript Do's -->
+        <div class="slide absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center">
+            <div class="slide-content max-w-4xl mx-auto w-full">
+                <h2 class="text-5xl font-bold mb-10"><span class="text-green-400">JavaScript: The DO's</span></h2>
+                <ul>
+                    <li>
+                        Pahami <strong class="font-semibold">ES6+</strong> (JavaScript modern).
+                        <p class="text-lg text-gray-400 italic ml-2">Contoh: `let`/`const` (lupain `var`), <em
+                                class="italic">Arrow Functions</em> (`=>`), `async/await`.</p>
+                    </li>
+                    <li>
+                        Pahami cara kerja <strong class="font-semibold">Asynchronous</strong>.
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? Hampir semua hal di web modern itu <em
+                                class="italic">async</em> (ambil data API, nungguin <em class="italic">event</em>).</p>
+                    </li>
+                    <li>
+                        Pakai <em class="italic">Strict Mode</em> (`'use strict';`).
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? Ini 'maksa' kita nulis kodingan yang lebih
+                            rapi dan aman.</p>
+                    </li>
+                    <li>
+                        Pecah kodingan kalian ke dalam <em class="italic">Modules</em> (`import`/`export`).
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? Biar file JS-nya nggak jadi satu file
+                            raksasa (gampang di-manage).</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 9: JavaScript Don'ts -->
+        <div class="slide absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center">
+            <div class="slide-content max-w-4xl mx-auto w-full">
+                <h2 class="text-5xl font-bold mb-10"><span class="text-red-400">JavaScript: The DON'Ts</span></h2>
+                <ul class="donts">
+                    <li>
+                        Kebanyakan manipulasi DOM secara langsung.
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? `document.getElementById(...)` itu lambat &
+                            bikin berantakan. Makanya ada React/Vue.</p>
+                    </li>
+                    <li>
+                        Terlalu percaya <em class="italic">client-side validation</em>.
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? Validasi JS itu buat <strong
+                                class="font-semibold text-cyan-300">UX</strong> (biar user nyaman). Validasi di backend
+                            (PHP) itu buat <strong class="font-semibold text-red-300">Security</strong> (biar aman).</p>
+                    </li>
+                    <li>
+                        Nyimpen data sensitif di <em class="italic">client-side</em>.
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? Jangan pernah simpen <em class="italic">API
+                                Keys</em> di kodingan JS. Semua orang bisa lihat!</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 10: Bagian 3: Laravel -->
+        <div
+            class="slide absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center items-center text-center">
+            <div class="slide-content max-w-3xl">
+                <h2 class="text-3xl font-medium mb-4 text-blue-300">Bagian 3: Laravel</h2>
+                <h1 class="text-6xl font-black mb-8">The Framework</h1>
+                <blockquote
+                    class="text-2xl text-gray-100 font-semibold mt-4 italic leading-relaxed border-l-4 border-blue-400 pl-6">
+                    "Laravel itu nggak gantiin PHP. Laravel itu cara paling keren & terstruktur buat <em
+                        class="italic">pakai</em> PHP."
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- Slide 11: Mengapa Laravel? -->
+        <div class="slide absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center">
+            <div class="slide-content max-w-4xl mx-auto w-full">
+                <h2 class="text-5xl font-bold mb-10 text-blue-300">Kenapa Sih Harus Laravel? (The "Magic")</h2>
+                <p class="text-xl text-gray-300 mb-8">Laravel itu pakai pola desain yang udah teruji:</p>
+
+                <div class="space-y-6">
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="text-2xl font-bold text-green-400 mb-2">MVC (Model-View-Controller)</h3>
+                        <p class="text-gray-300"><strong class="font-semibold">Model:</strong> Ngobrol sama database
+                            (Eloquent).</p>
+                        <p class="text-gray-300"><strong class="font-semibold">View:</strong> Tampilan yang dilihat user
+                            (Blade templates).</p>
+                        <p class="text-gray-300"><strong class="font-semibold">Controller:</strong> "Polisi lalu lintas"
+                            yang nyambungin M dan V.</p>
+                        <p class="text-gray-400 italic mt-2">Hasilnya? Kodingan jadi rapi, nggak campur aduk.</p>
+                    </div>
+
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="text-2xl font-bold text-yellow-400 mb-2">Eloquent ORM</h3>
+                        <p class="text-gray-300">Ngomong sama database pakai bahasa manusia.</p>
+                        <code
+                            class="text-lg text-pink-400 bg-gray-900 px-2 py-1 rounded">User::where('semester', 6)->get()</code>
+                    </div>
+
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="text-2xl font-bold text-purple-400 mb-2">Artisan</h3>
+                        <p class="text-gray-300">Asisten pribadi kita di <em class="italic">command line</em>.</p>
+                        <code
+                            class="text-lg text-pink-400 bg-gray-900 px-2 py-1 rounded">php artisan make:controller</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Laravel Do's -->
+        <div class="slide absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center">
+            <div class="slide-content max-w-4xl mx-auto w-full">
+                <h2 class="text-5xl font-bold mb-10"><span class="text-green-400">Laravel: The DO's</span></h2>
+                <ul>
+                    <li>
+                        <span class="text-3xl font-black text-yellow-300">BACA DOKUMENTASINYA.</span>
+                        <p class="text-lg text-gray-400 italic ml-2">Serius. Ini <em class="italic">best practice</em>
+                            nomor satu. Dokumentasi Laravel itu salah satu yang terbaik.</p>
+                    </li>
+                    <li>
+                        Pakai <strong class="font-semibold">Migrations</strong> buat ngatur skema database.
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? Jangan ganti-ganti tabel lewat phpMyAdmin.
+                            Migrations itu ibarat 'Git' buat database.</p>
+                    </li>
+                    <li>
+                        Pakai <strong class="font-semibold">Form Requests</strong> buat validasi.
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? Biar logika validasi pindah dari <em
+                                class="italic">Controller</em>. <em class="italic">Controller</em> jadi bersih & fokus.
+                        </p>
+                    </li>
+                    <li>
+                        Pakai <em class="italic">Eager Loading</em> (`::with('relations')`).
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? Biar nggak kena <em class="italic">N+1
+                                Query Problem</em>. Ini biang kerok performa lambat.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 13: Laravel Don'ts -->
+        <div class="slide absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center">
+            <div class="slide-content max-w-4xl mx-auto w-full">
+                <h2 class="text-5xl font-bold mb-10"><span class="text-red-400">Laravel: The DON'Ts</span></h2>
+                <ul class="donts">
+                    <li>
+                        Nulis semua logika di <strong class="font-semibold">Controller (Fat Controller)</strong>.
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? <em class="italic">Controller</em> itu
+                            harusnya 'kurus'. Logika bisnisnya pindahin ke <em class="italic">Service Classes</em>.</p>
+                    </li>
+                    <li>
+                        Nulis logika di file `routes/web.php`.
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? File <em class="italic">routes</em> itu
+                            cuma buat daftar rute. Logikanya taruh di <em class="italic">Controller</em>.</p>
+                    </li>
+                    <li>
+                        Nge-<em class="italic">query</em> database di dalam <em class="italic">loop</em>
+                        (Blade/Controller).
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? Ya ini namanya <em class="italic">N+1
+                                Problem</em> (100 <em class="italic">posts</em> = 101 <em class="italic">query</em>).
+                        </p>
+                    </li>
+                    <li>
+                        Ngoprek file di dalam folder `vendor`.
+                        <p class="text-lg text-gray-400 italic ml-2">Kenapa? Perubahan kalian bakal hilang pas `composer
+                            update`.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 14: Bagian 4: Beyond the Code -->
+        <div
+            class="slide absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center items-center text-center">
+            <div class="slide-content max-w-3xl">
+                <h2 class="text-3xl font-medium mb-4 text-blue-300">Bagian 4: Beyond the Code</h2>
+                <h1 class="text-6xl font-black mb-8">The Professional Mindset</h1>
+                <p class="text-2xl text-gray-100 font-semibold mt-4">Jadi developer itu bukan cuma soal <em
+                        class="italic">ngoding</em>.</p>
+            </div>
+        </div>
+
+        <!-- Slide 15: Tools Wajib -->
+        <div class="slide absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center">
+            <div class="slide-content max-w-4xl mx-auto w-full">
+                <h2 class="text-5xl font-bold mb-10 text-blue-300">Tools Wajib (Selain VS Code pastinya)</h2>
+
+                <ol class="list-decimal list-outside text-xl md:text-2xl space-y-8 text-gray-100 ml-8">
+                    <li>
+                        <strong class="text-3xl text-green-400">Git (Version Control)</strong>
+                        <p class="text-gray-300 mt-1 italic">"Kalau kodingan kalian nggak ada di Git, itu sama aja nggak
+                            ada."</p>
+                        <p class="text-gray-300 mt-1">Ini alat <strong
+                                class="font-semibold text-green-300">kolaborasi</strong> tim, bukan cuma buat backup.
+                        </p>
+                        <p class="text-gray-300 mt-1">Minimal: <code class="text-pink-400">add</code>, <code
+                                class="text-pink-400">commit</code>, <code class="text-pink-400">push</code>, <code
+                                class="text-pink-400">pull</code>.</p>
+                    </li>
+                    <li>
+                        <strong class="text-3xl text-green-400">Terminal / Command Line</strong>
+                        <p class="text-gray-300 mt-1">Nggak usah takut sama layar hitam. Developer pro itu 'rumahnya' di
+                            terminal (Artisan, Composer, Git, NPM).</p>
+                    </li>
+                    <li>
+                        <strong class="text-3xl text-green-400">Debugging Tools</strong>
+                        <p class="text-gray-300 mt-1"><strong class="font-semibold">JS:</strong> `console.log()` itu
+                            oke, tapi <strong class="font-bold">Chrome DevTools (Debugger)</strong> itu jauh lebih
+                            powerful.</p>
+                        <p class="text-gray-300 mt-1"><strong class="font-semibold">PHP:</strong> `dd()` di Laravel udah
+                            enak, tapi <strong class="font-bold">Xdebug</strong> itu baru level pro.</p>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 16: Clean Code -->
+        <div class="slide absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center">
+            <div class="slide-content max-w-4xl mx-auto w-full">
+                <h2 class="text-5xl font-bold mb-10 text-blue-300">"Clean Code" itu Best Practice Paling Penting</h2>
+                <blockquote
+                    class="text-2xl text-gray-100 font-medium mt-4 italic leading-relaxed border-l-4 border-blue-400 pl-6 mb-10">
+                    "Kodingan yang bagus itu kayak lelucon yang bagus. Nggak perlu dijelasin."
+                </blockquote>
+
+                <ul>
+                    <li>
+                        <strong class="font-semibold">Kasih Nama yang Jelas:</strong>
+                        <p class="text-lg text-gray-400 italic ml-2">`$u` vs `$user`, `$data` vs `$activeUsers`. Pakai
+                            nama yang jelas.</p>
+                    </li>
+                    <li>
+                        <strong class="font-semibold">DRY (Don't Repeat Yourself):</strong>
+                        <p class="text-lg text-gray-400 italic ml-2">Liat ada kodingan <em
+                                class="italic">copy-paste</em>? Stop. Bikin jadi fungsi.</p>
+                    </li>
+                    <li>
+                        <strong class="font-semibold">SRP (Single Responsibility Principle):</strong>
+                        <p class="text-lg text-gray-400 italic ml-2">Satu fungsi = Satu tugas. Satu <em
+                                class="italic">class</em> = Satu tanggung jawab. Gitu aja.</p>
+                    </li>
+                </ul>
+                <p class="text-xl text-yellow-300 font-semibold mt-10 text-center italic">Ingat: Kodingan kalian bakal
+                    lebih sering <strong class="font-bold not-italic">dibaca</strong> orang daripada <strong
+                        class="font-bold not-italic">ditulis</strong>.</p>
+            </div>
+        </div>
+
+        <!-- Slide 17: Security -->
+        <div class="slide absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center">
+            <div class="slide-content max-w-4xl mx-auto w-full">
+                <h2 class="text-5xl font-bold mb-10 text-blue-300">Security itu Wajib, Bukan Pilihan</h2>
+                <div class="text-center bg-red-900 border border-red-500 p-6 rounded-lg mb-10">
+                    <p class="text-3xl font-black text-red-200 tracking-wider">Mindset-nya: "Jangan pernah percaya input
+                        dari user."</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-lg">
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="text-2xl font-bold text-red-400 mb-3">SQL Injection (SQLi)</h3>
+                        <p class="text-gray-300"><strong class="text-green-400">Solusi:</strong> Pakai PDO & Eloquent.
+                            (Jangan pakai <em class="italic">raw query</em>).</p>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="text-2xl font-bold text-red-400 mb-3">Cross-Site Scripting (XSS)</h3>
+                        <p class="text-gray-300"><strong class="text-green-400">Solusi:</strong> Blade (`{{ $variabel
+                            }}`) otomatis aman.</p>
+                        <p class="text-gray-400 italic mt-2">Hati-hati kalau pakai `{!! $variabel !!}`.</p>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="text-2xl font-bold text-red-400 mb-3">Cross-Site Request Forgery (CSRF)</h3>
+                        <p class="text-gray-300"><strong class="text-green-400">Solusi:</strong> Laravel udah nyiapin
+                            `@csrf` token.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Menuju Magang -->
+        <div class="slide absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center">
+            <div class="slide-content max-w-4xl mx-auto w-full">
+                <h2 class="text-5xl font-bold mb-10 text-blue-300">Menuju Magang / Dunia Kerja</h2>
+                <p class="text-xl text-gray-300 mb-8">Apa sih yang dicari perusahaan dari mahasiswa?</p>
+
+                <ol class="list-decimal list-outside text-xl md:text-2xl space-y-6 text-gray-100 ml-8">
+                    <li class="mb-2">
+                        <strong class="text-green-400">Problem Solving Mindset:</strong>
+                        <p class="text-gray-300 mt-1">Bukan "hapal syntax", tapi "gimana cara kalian mecahin masalah
+                            baru".</p>
+                    </li>
+                    <li class="mb-2">
+                        <strong class="text-green-400">Kemampuan Belajar Mandiri:</strong>
+                        <p class="text-gray-300 mt-1">Jago <em class="italic">Googling</em> itu skill. Kuat baca
+                            dokumentasi itu skill.</p>
+                    </li>
+                    <li class="mb-2">
+                        <strong class="text-green-400">Dasar yang Kuat & Kemampuan Kolaborasi:</strong>
+                        <p class="text-gray-300 mt-1">Paham <strong class="font-semibold">OOP</strong> (ini dasarnya
+                            Laravel), Paham <strong class="font-semibold">Git</strong>, Paham <strong
+                                class="font-semibold">HTTP</strong> (GET, POST).</p>
+                    </li>
+                </ol>
+
+                <div class="mt-12 text-center bg-gray-800 p-6 rounded-lg border border-blue-600">
+                    <p class="text-3xl font-bold text-yellow-300">Portofolio di GitHub > IPK Tinggi</p>
+                    <p class="text-xl font-medium text-gray-200 mt-2">(tapi dua-duanya lebih baik!)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 19: Kesimpulan -->
+        <div class="slide absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center">
+            <div class="slide-content max-w-4xl mx-auto w-full">
+                <h2 class="text-5xl font-bold mb-10 text-blue-300">Kesimpulan</h2>
+                <ol class="list-decimal list-outside text-xl md:text-2xl space-y-6 text-gray-100 ml-8">
+                    <li class="mb-3">
+                        <em class="italic">Frameworks</em> (kayak Laravel) bikin kita kerja lebih <strong
+                            class="font-semibold text-green-300">cepat</strong>, lebih <strong
+                            class="font-semibold text-green-300">aman</strong>, dan lebih <strong
+                            class="font-semibold text-green-300">terstruktur</strong>.
+                    </li>
+                    <li class="mb-3">
+                        <em class="italic">Best practices</em> (DRY, SRP) itu panduan biar kodingan kita gampang di-<em
+                            class="italic">maintenance</em>.
+                    </li>
+                    <li class="mb-3">
+                        <em class="italic">Tools</em> (Git, Composer) itu <strong
+                            class="font-semibold text-yellow-300">wajib</strong> hukumnya buat kolaborasi.
+                    </li>
+                    <li class="mb-3">
+                        <strong class="text-yellow-300"><em class="italic">Teknologi</em> bakal terus ganti, tapi <em
+                                class="italic">prinsip</em> (Clean Code, Security, Problem Solving) bakal kepakai
+                            selamanya.</strong>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 20: Q&A -->
+        <div
+            class="slide absolute inset-0 w-full h-full p-12 md:p-24 flex flex-col justify-center items-center text-center bg-gradient-to-br from-blue-700 via-indigo-800 to-gray-900">
+            <div class="max-w-4xl">
+                <h1 class="text-7xl font-black text-white mb-10">Terima Kasih</h1>
+
+                <blockquote
+                    class="text-2xl md:text-3xl text-blue-100 font-light italic leading-relaxed border-l-4 border-blue-300 pl-8 mb-12">
+                    "Nggak ada pertanyaan bodoh. Yang ada cuma kesempatan buat belajar bareng."
+                </blockquote>
+
+                <h2 class="text-5xl font-bold text-yellow-300 mb-20">Yuk, kita diskusi!</h2>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigasi -->
+    <button id="prev"
+        class="absolute left-4 top-1/2 -translate-y-1/2 text-white bg-black bg-opacity-30 hover:bg-opacity-60 rounded-full w-14 h-14 flex items-center justify-center transition-all duration-300 z-10">
+        <i class="fas fa-chevron-left text-2xl"></i>
+    </button>
+    <button id="next"
+        class="absolute right-4 top-1/2 -translate-y-1/2 text-white bg-black bg-opacity-30 hover:bg-opacity-60 rounded-full w-14 h-14 flex items-center justify-center transition-all duration-300 z-10">
+        <i class="fas fa-chevron-right text-2xl"></i>
+    </button>
+
+    <!-- Nomor Slide -->
+    <div id="slide-counter"
+        class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black bg-opacity-40 text-white text-lg font-medium px-4 py-2 rounded-full z-10">
+        1 / 20
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const prevButton = document.getElementById('prev');
+            const nextButton = document.getElementById('next');
+            const slideCounter = document.getElementById('slide-counter');
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+
+            function showSlide(n) {
+                // Batasi slide agar tidak keluar dari jangkauan
+                if (n >= totalSlides) {
+                    currentSlide = totalSlides - 1;
+                } else if (n < 0) {
+                    currentSlide = 0;
+                } else {
+                    currentSlide = n;
+                }
+
+                // Loop semua slide
+                slides.forEach((slide, index) => {
+                    slide.classList.remove('active');
+                    slide.classList.remove('previous');
+
+                    if (index === currentSlide) {
+                        slide.classList.add('active'); // Tampilkan slide saat ini
+                    } else if (index < currentSlide) {
+                        slide.classList.add('previous'); // Tandai slide sebelumnya
+                    }
+                });
+
+                // Update nomor slide
+                slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+
+                // Sembunyikan/tampilkan tombol navigasi di awal/akhir
+                prevButton.style.display = currentSlide === 0 ? 'none' : 'flex';
+                nextButton.style.display = currentSlide === totalSlides - 1 ? 'none' : 'flex';
+            }
+
+            // Event listener untuk tombol
+            prevButton.addEventListener('click', () => {
+                showSlide(currentSlide - 1);
+            });
+
+            nextButton.addEventListener('click', () => {
+                showSlide(currentSlide + 1);
+            });
+
+            // Event listener untuk keyboard (panah kiri/kanan)
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === ' ') { // Panah kanan atau spasi
+                    showSlide(currentSlide + 1);
+                } else if (e.key === 'ArrowLeft') { // Panah kiri
+                    showSlide(currentSlide - 1);
+                }
+            });
+
+            // Tampilkan slide pertama saat dimuat
+            showSlide(0);
+
+            // Fungsi untuk format tanggal Indonesia
+            function formatTanggalIndonesia(date) {
+                const bulanIndonesia = [
+                    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+                ];
+
+                const tanggal = date.getDate();
+                const bulan = bulanIndonesia[date.getMonth()];
+                const tahun = date.getFullYear();
+
+                return `${tanggal} ${bulan} ${tahun}`;
+            }
+
+            // Update tanggal presentasi secara dinamis
+            function updatePresentationDate() {
+                const today = new Date();
+                const formattedDate = formatTanggalIndonesia(today);
+                const dateElement = document.getElementById('presentation-date');
+
+                if (dateElement) {
+                    dateElement.textContent = formattedDate;
+                }
+            }
+
+            // Panggil fungsi update tanggal saat halaman dimuat
+            updatePresentationDate();
+        });
+    </script>
+</body>
+
+</html>
