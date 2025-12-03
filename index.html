@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Presentasi: Membangun Web Modern</title>
     <!-- Memuat Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,6 +15,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
+        :root {
+            --vh: 100vh;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                height: calc(var(--vh) * 1);
+            }
+        }
+
         /* Menggunakan font Inter sebagai default */
         body {
             font-family: 'Inter', sans-serif;
@@ -89,7 +99,9 @@
     </style>
 </head>
 
-<body class="bg-gray-900 text-white relative h-screen w-screen overflow-hidden">
+<!-- <body class="bg-gray-900 text-white relative h-screen w-screen overflow-hidden"> -->
+    <body class="bg-gray-900 text-white relative w-screen overflow-hidden" style="height: calc(var(--vh) * 100);">
+
 
     <!-- Kontainer utama slideshow -->
     <div id="slideshow-container" class="relative w-full h-full">
@@ -493,6 +505,7 @@
                 // Sembunyikan/tampilkan tombol navigasi di awal/akhir
                 prevButton.style.display = currentSlide === 0 ? 'none' : 'flex';
                 nextButton.style.display = currentSlide === totalSlides - 1 ? 'none' : 'flex';
+
             }
 
             // Event listener untuk tombol
@@ -544,6 +557,19 @@
             // Panggil fungsi update tanggal saat halaman dimuat
             updatePresentationDate();
         });
+
+
+        function fixMobileVH() {
+            document.documentElement.style.setProperty(
+                '--vh',
+                `${window.innerHeight * 0.01}px`
+            );
+        }
+
+        window.addEventListener('resize', fixMobileVH);
+        fixMobileVH();
+        
+
     </script>
 </body>
 
